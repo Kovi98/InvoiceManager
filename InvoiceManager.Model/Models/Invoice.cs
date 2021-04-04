@@ -14,7 +14,7 @@ namespace InvoiceManager.Model.Models
         public DateTime PaymentDue { get; set; }
         public decimal Summary { get; set; }
         public decimal Tax { get; set; }
-        public decimal SumaryWithTax { get; set; }
+        public decimal SummaryWithTax { get; set; }
 
         public Person Customer { get; set; }
         public Person Supplier { get; set; }
