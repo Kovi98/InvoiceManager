@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceManager.Portal", "InvoiceManager.Portal\InvoiceManager.Portal.csproj", "{97FBE97F-D746-4B3E-B00F-8F0B0E947826}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceManager.Portal", "InvoiceManager.Portal\InvoiceManager.Portal.csproj", "{97FBE97F-D746-4B3E-B00F-8F0B0E947826}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceManager.Model", "InvoiceManager.Model\InvoiceManager.Model.csproj", "{9D12E3DC-DA1D-4A0A-BDCB-AF9CF66B0CA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceManager.Model", "InvoiceManager.Model\InvoiceManager.Model.csproj", "{9D12E3DC-DA1D-4A0A-BDCB-AF9CF66B0CA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceManager.API", "InvoiceManager.API\InvoiceManager.API.csproj", "{83BA7BE3-6A34-4997-B57C-A4C485F03C4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceManager.API", "InvoiceManager.API\InvoiceManager.API.csproj", "{83BA7BE3-6A34-4997-B57C-A4C485F03C4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace InvoiceManager.Model.Models
@@ -20,6 +21,7 @@ namespace InvoiceManager.Model.Models
                 return Count * Price * TaxRate.Rate;
             }
         }
+        [Display(Name = "Price with tax")]
         public decimal PriceSummary
         {
             get
@@ -28,6 +30,7 @@ namespace InvoiceManager.Model.Models
             }
         }
         public Invoice Invoice { get; set; }
+        [Display(Name = "Tax rate")]
         public Tax TaxRate { get; set; }
     }
 }

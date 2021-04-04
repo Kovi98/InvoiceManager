@@ -15,8 +15,8 @@ namespace InvoiceManager.Model.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("InvoiceManager.Model.Models.Invoice", b =>
@@ -39,16 +39,16 @@ namespace InvoiceManager.Model.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Summary")
-                        .HasColumnType("decimal(38,2)");
+                        .HasColumnType("decimal(38, 2)");
 
                     b.Property<decimal>("SummaryWithTax")
-                        .HasColumnType("decimal(38,2)");
+                        .HasColumnType("decimal(38, 2)");
 
                     b.Property<int>("SupplierId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(38,2)");
+                        .HasColumnType("decimal(38, 2)");
 
                     b.HasKey("Id");
 
@@ -76,7 +76,7 @@ namespace InvoiceManager.Model.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(38,2)");
+                        .HasColumnType("decimal(38, 2)");
 
                     b.Property<int>("TaxRateId")
                         .HasColumnType("int");
@@ -137,7 +137,7 @@ namespace InvoiceManager.Model.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(38,2)");
+                        .HasColumnType("decimal(38, 2)");
 
                     b.HasKey("Id");
 
@@ -157,10 +157,6 @@ namespace InvoiceManager.Model.Migrations
                         .HasForeignKey("SupplierId")
                         .HasConstraintName("FK_Invoice_Person_SupplierId")
                         .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("InvoiceManager.Model.Models.InvoiceItem", b =>
@@ -176,22 +172,6 @@ namespace InvoiceManager.Model.Migrations
                         .HasForeignKey("TaxRateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("TaxRate");
-                });
-
-            modelBuilder.Entity("InvoiceManager.Model.Models.Invoice", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("InvoiceManager.Model.Models.Person", b =>
-                {
-                    b.Navigation("InvoicesWhereCustomer");
-
-                    b.Navigation("InvoicesWhereSupplier");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,16 +11,16 @@ namespace InvoiceManager.Model.Migrations
                 name: "Person",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IC = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DIC = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    IC = table.Column<string>(nullable: true),
+                    DIC = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(nullable: true),
+                    HouseNumber = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,10 +31,10 @@ namespace InvoiceManager.Model.Migrations
                 name: "Tax",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rate = table.Column<decimal>(type: "decimal(38,2)", nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    Rate = table.Column<decimal>(type: "decimal(38, 2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,16 +45,16 @@ namespace InvoiceManager.Model.Migrations
                 name: "Invoice",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
-                    SupplierId = table.Column<int>(type: "int", nullable: false),
-                    PaymentDue = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Summary = table.Column<decimal>(type: "decimal(38,2)", nullable: false),
-                    Tax = table.Column<decimal>(type: "decimal(38,2)", nullable: false),
-                    SummaryWithTax = table.Column<decimal>(type: "decimal(38,2)", nullable: false)
+                    Created = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
+                    SupplierId = table.Column<int>(nullable: false),
+                    PaymentDue = table.Column<DateTime>(nullable: false),
+                    Summary = table.Column<decimal>(type: "decimal(38, 2)", nullable: false),
+                    Tax = table.Column<decimal>(type: "decimal(38, 2)", nullable: false),
+                    SummaryWithTax = table.Column<decimal>(type: "decimal(38, 2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,13 +77,13 @@ namespace InvoiceManager.Model.Migrations
                 name: "InvoiceItem",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceId = table.Column<int>(type: "int", nullable: false),
-                    TaxRateId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Count = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(38,2)", nullable: false)
+                    InvoiceId = table.Column<int>(nullable: false),
+                    TaxRateId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Count = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(38, 2)", nullable: false)
                 },
                 constraints: table =>
                 {
