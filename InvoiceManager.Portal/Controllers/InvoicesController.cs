@@ -49,8 +49,8 @@ namespace InvoiceManager.Portal.Controllers
         // GET: Invoices/Create
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.People, "Id", "Id");
-            ViewData["SupplierId"] = new SelectList(_context.People, "Id", "Id");
+            ViewData["CustomerId"] = new SelectList(_context.People, "Id", "Name");
+            ViewData["SupplierId"] = new SelectList(_context.People, "Id", "Name");
             return View();
         }
 
@@ -63,12 +63,13 @@ namespace InvoiceManager.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
+                invoice.Created = DateTime.Now;
                 _context.Add(invoice);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.People, "Id", "Id", invoice.CustomerId);
-            ViewData["SupplierId"] = new SelectList(_context.People, "Id", "Id", invoice.SupplierId);
+            ViewData["CustomerId"] = new SelectList(_context.People, "Id", "Name", invoice.CustomerId);
+            ViewData["SupplierId"] = new SelectList(_context.People, "Id", "Name", invoice.SupplierId);
             return View(invoice);
         }
 
@@ -85,8 +86,8 @@ namespace InvoiceManager.Portal.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.People, "Id", "Id", invoice.CustomerId);
-            ViewData["SupplierId"] = new SelectList(_context.People, "Id", "Id", invoice.SupplierId);
+            ViewData["CustomerId"] = new SelectList(_context.People, "Id", "Name", invoice.CustomerId);
+            ViewData["SupplierId"] = new SelectList(_context.People, "Id", "Name", invoice.SupplierId);
             return View(invoice);
         }
 
@@ -122,40 +123,9 @@ namespace InvoiceManager.Portal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.People, "Id", "Id", invoice.CustomerId);
-            ViewData["SupplierId"] = new SelectList(_context.People, "Id", "Id", invoice.SupplierId);
+            ViewData["CustomerId"] = new SelectList(_context.People, "Id", "Name", invoice.CustomerId);
+            ViewData["SupplierId"] = new SelectList(_context.People, "Id", "Name", invoice.SupplierId);
             return View(invoice);
-        }
-
-        // GET: Invoices/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var invoice = await _context.Invoices
-                .Include(i => i.Customer)
-                .Include(i => i.Supplier)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (invoice == null)
-            {
-                return NotFound();
-            }
-
-            return View(invoice);
-        }
-
-        // POST: Invoices/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var invoice = await _context.Invoices.FindAsync(id);
-            _context.Invoices.Remove(invoice);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool InvoiceExists(int id)
