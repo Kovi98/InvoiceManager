@@ -75,7 +75,7 @@ namespace InvoiceManager.Portal.Controllers
                 invoice.Recalculate();
                 _context.Update(invoice);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "InvoiceItems", new { id = invoiceItem.InvoiceId });
             }
             ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Name", invoiceItem.TaxRateId);
             return View(invoiceItem);
@@ -134,7 +134,7 @@ namespace InvoiceManager.Portal.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "InvoiceItems", new { id = invoiceItem.InvoiceId });
             }
             ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Name", invoiceItem.TaxRateId);
             return View(invoiceItem);
@@ -173,7 +173,7 @@ namespace InvoiceManager.Portal.Controllers
             invoice.Recalculate();
             _context.Update(invoice);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "InvoiceItems", new { id = invoiceItem.InvoiceId });
         }
 
         private bool InvoiceItemExists(int id)
