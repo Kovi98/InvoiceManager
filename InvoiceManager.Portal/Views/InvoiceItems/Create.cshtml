@@ -12,14 +12,10 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="InvoiceId" class="control-label"></label>
-                <select asp-for="InvoiceId" class ="form-control" asp-items="ViewBag.InvoiceId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="TaxRateId" class="control-label"></label>
-                <select asp-for="TaxRateId" class ="form-control" asp-items="ViewBag.TaxRateId"></select>
-            </div>
+            <input type="hidden" asp-for="InvoiceId" value="@ViewBag.ParentId" />
+            <input type="hidden" asp-for="Tax" />
+            <input type="hidden" asp-for="PriceSummary" />
+            <input type="hidden" asp-for="Id" value="0" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -36,6 +32,10 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="TaxRateId" class="control-label"></label>
+                <select asp-for="TaxRateId" class="form-control" asp-items="ViewBag.TaxRateId"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -43,7 +43,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-route-id="@ViewBag.ParentId">Back to List</a>
 </div>
 
 @section Scripts {

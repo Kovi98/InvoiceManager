@@ -50,17 +50,18 @@
             @Html.DisplayNameFor(model => model.Customer)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Id)
+            @Html.DisplayFor(model => model.Customer.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Supplier)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Supplier.Id)
+            @Html.DisplayFor(model => model.Supplier.Name)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-controller="InvoiceItems" asp-action="Index" asp-route-id="@Model.Id">Invoice Items</a> |
     <a asp-action="Index">Back to List</a>
 </div>

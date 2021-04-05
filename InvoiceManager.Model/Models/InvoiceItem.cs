@@ -13,12 +13,19 @@ namespace InvoiceManager.Model.Models
         public string Name { get; set; }
         public int Count { get; set; }
         public decimal Price { get; set; }
-
+        [Display(Name = "Price all")]
+        public decimal PriceAll
+        {
+            get
+            {
+                return Price * Count;
+            }
+        }
         public decimal Tax
         {
             get
             {
-                return Count * Price * TaxRate.Rate;
+                return PriceAll * TaxRate?.Rate ?? 0;
             }
         }
         [Display(Name = "Price with tax")]
@@ -26,7 +33,7 @@ namespace InvoiceManager.Model.Models
         {
             get
             {
-                return Price + Tax;
+                return PriceAll + Tax;
             }
         }
         public Invoice Invoice { get; set; }

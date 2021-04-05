@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 
 namespace InvoiceManager.Model.Models
@@ -22,11 +23,30 @@ namespace InvoiceManager.Model.Models
         public Person Customer { get; set; }
         public Person Supplier { get; set; }
         public ICollection<InvoiceItem> Items { get; set; }
+
+        public void Recalculate()
+        {
+            if (Items is null)
+                return;
+            if (Items.Count == 0)
+            {
+                Summary = 0;
+                Tax = 0;
+                SummaryWithTax = 0;
+            }
+            else
+            {
+                var items = from item in Items
+                             select item;
+                Summary = items.Select(x => x.PriceAll).Sum();
+                Tax = items.Select(x => x.Tax).Sum();
+                SummaryWithTax = items.Select(x => x.PriceSummary).Sum();
+            }
+        }
     }
     public enum InvoiceStatus
     {
         Created,
-        Sent,
         Paid
     }
 }

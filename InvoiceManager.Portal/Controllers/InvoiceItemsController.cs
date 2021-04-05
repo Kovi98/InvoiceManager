@@ -20,9 +20,14 @@ namespace InvoiceManager.Portal.Controllers
         }
 
         // GET: InvoiceItems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var invoiceManagerContext = _context.InvoiceItems.Include(i => i.Invoice).Include(i => i.TaxRate);
+            var invoiceManagerContext = _context.InvoiceItems.Include(i => i.Invoice).Include(i => i.TaxRate).Where(i => i.InvoiceId == id);
+            if (id != null && id > 0)
+            {
+                invoiceManagerContext.Where(x => x.InvoiceId == id);
+                ViewData["ParentId"] = id;
+            }
             return View(await invoiceManagerContext.ToListAsync());
         }
 
@@ -33,7 +38,7 @@ namespace InvoiceManager.Portal.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["ParentId"] = id;
             var invoiceItem = await _context.InvoiceItems
                 .Include(i => i.Invoice)
                 .Include(i => i.TaxRate)
@@ -47,10 +52,10 @@ namespace InvoiceManager.Portal.Controllers
         }
 
         // GET: InvoiceItems/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id");
-            ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Id");
+            ViewData["ParentId"] = id;
+            ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Name");
             return View();
         }
 
@@ -61,14 +66,18 @@ namespace InvoiceManager.Portal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,InvoiceId,TaxRateId,Name,Count,Price")] InvoiceItem invoiceItem)
         {
+            invoiceItem.TaxRate = _context.Taxes.Find(invoiceItem.TaxRateId);
             if (ModelState.IsValid)
             {
                 _context.Add(invoiceItem);
                 await _context.SaveChangesAsync();
+                var invoice = _context.Invoices.Include(x => x.Items).ToList().Find(x => x.Id == invoiceItem.InvoiceId);
+                invoice.Recalculate();
+                _context.Update(invoice);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id", invoiceItem.InvoiceId);
-            ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Id", invoiceItem.TaxRateId);
+            ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Name", invoiceItem.TaxRateId);
             return View(invoiceItem);
         }
 
@@ -81,12 +90,12 @@ namespace InvoiceManager.Portal.Controllers
             }
 
             var invoiceItem = await _context.InvoiceItems.FindAsync(id);
+            ViewData["ParentId"] = invoiceItem.InvoiceId;
             if (invoiceItem == null)
             {
                 return NotFound();
             }
-            ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id", invoiceItem.InvoiceId);
-            ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Id", invoiceItem.TaxRateId);
+            ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Name", invoiceItem.TaxRateId);
             return View(invoiceItem);
         }
 
@@ -101,12 +110,17 @@ namespace InvoiceManager.Portal.Controllers
             {
                 return NotFound();
             }
-
+            invoiceItem.TaxRate = _context.Taxes.Find(invoiceItem.TaxRateId);
+            ViewData["ParentId"] = invoiceItem.InvoiceId;
             if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(invoiceItem);
+                    await _context.SaveChangesAsync();
+                    var invoice = _context.Invoices.Include(x => x.Items).ToList().Find(x => x.Id == invoiceItem.InvoiceId);
+                    invoice.Recalculate();
+                    _context.Update(invoice);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -122,8 +136,7 @@ namespace InvoiceManager.Portal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id", invoiceItem.InvoiceId);
-            ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Id", invoiceItem.TaxRateId);
+            ViewData["TaxRateId"] = new SelectList(_context.Taxes, "Id", "Name", invoiceItem.TaxRateId);
             return View(invoiceItem);
         }
 
@@ -139,6 +152,7 @@ namespace InvoiceManager.Portal.Controllers
                 .Include(i => i.Invoice)
                 .Include(i => i.TaxRate)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            ViewData["ParentId"] = invoiceItem.InvoiceId;
             if (invoiceItem == null)
             {
                 return NotFound();
@@ -154,6 +168,10 @@ namespace InvoiceManager.Portal.Controllers
         {
             var invoiceItem = await _context.InvoiceItems.FindAsync(id);
             _context.InvoiceItems.Remove(invoiceItem);
+            await _context.SaveChangesAsync();
+            var invoice = _context.Invoices.Include(x => x.Items).ToList().Find(x => x.Id == invoiceItem.InvoiceId);
+            invoice.Recalculate();
+            _context.Update(invoice);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

@@ -64,6 +64,10 @@ namespace InvoiceManager.Portal.Controllers
             if (ModelState.IsValid)
             {
                 invoice.Created = DateTime.Now;
+                invoice.Status = InvoiceStatus.Created;
+                invoice.Summary = 0;
+                invoice.Tax = 0;
+                invoice.SummaryWithTax = 0;
                 _context.Add(invoice);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
