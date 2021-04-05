@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using InvoiceManager.Model.Data;
 using InvoiceManager.Model.Models;
 using Microsoft.AspNetCore.JsonPatch;
+using InvoiceManager.API.Attributes;
 
 namespace InvoiceManager.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiKey]
     public class InvoicesController : ControllerBase
     {
         private readonly InvoiceManagerContext _context;
