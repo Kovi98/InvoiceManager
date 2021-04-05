@@ -28,8 +28,8 @@ namespace InvoiceManager.API.Controllers
             return await _context.Invoices.Where(x => x.Status != InvoiceStatus.Paid).ToListAsync();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPayInvoice(int id)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> PayInvoice(int id)
         {
             if (!InvoiceExists(id))
                 return NotFound();
