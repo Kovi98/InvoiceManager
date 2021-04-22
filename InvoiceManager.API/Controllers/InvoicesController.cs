@@ -41,7 +41,6 @@ namespace InvoiceManager.API.Controllers
                 return BadRequest();
             }
             invoice.Status = InvoiceStatus.Paid;
-            _context.Entry(invoice).State = EntityState.Modified;
 
             try
             {
